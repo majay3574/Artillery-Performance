@@ -1,0 +1,26 @@
+{
+  "name": "artillery-project",
+  "version": "1.0.0",
+  "description": "Load testing project using Artillery",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "loadtest": "artillery run artillery.yml -o reports/report.json",
+    "report:html": "node scripts/generate-artillery-report.js reports/report.json reports/report.html",
+    "loadtest:report": "npm run loadtest && npm run report:html"
+  },
+  "keywords": [
+    "artillery",
+    "load-testing",
+    "performance"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "artillery": "^2.0.30"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "uuid": "^13.0.0"
+  }
+}

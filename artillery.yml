@@ -1,0 +1,33 @@
+config:
+  target: "http://localhost:3000"
+  plugins:
+    expect: {}
+  phases:
+    - duration: 30
+      arrivalRate: 2
+      name: "Warm up"
+    - duration: 60
+      arrivalRate: 10
+      name: "Load"
+    - duration: 15
+      arrivalRate: 50
+      name: "Spike"
+  defaults:
+    headers:
+      Content-Type: "application/x-www-form-urlencoded"
+
+scenarios:
+  - name: "Slash meet command"
+    flow:
+      - post:
+          url: "/meet"
+          form:
+            command: "/meet"
+            text: "Daily standup|15"
+            user_name: "load_tester"
+            channel_name: "general"
+          expect:
+            - statusCode: 200
+            - contentType: "json"
+            - hasProperty: "meeting.meetLink"
+            - jmespath: "contains(meeting.meetLink, 'https://meet.google.com/')"
